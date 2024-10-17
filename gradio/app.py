@@ -82,13 +82,13 @@ def update_chart():
     fig = go.Figure()
     fig.add_trace(go.Scatter(
         x=[point["timestamp"] for point in data_points],
-        y=[point["value"] for point in data_points],
+        y=[point["current"] for point in data_points],
         mode='lines+markers'
     ))
     fig.update_layout(
         title="MQTT Data Visualization",
         xaxis_title="Timestamp",
-        yaxis_title="Value"
+        yaxis_title="Current (A)"
     )
     return fig
 
