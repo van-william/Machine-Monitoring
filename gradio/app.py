@@ -60,7 +60,6 @@ def on_message(client, userdata, message):
 client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2,protocol=mqtt.MQTTv5,transport='websockets')
 client.on_message = on_message
 client.on_connect = on_connect
-client.ws_set_options(path="/mqtt", headers=None)
 client.connect(MQTT_BROKER, 8000, 60)
 
 # Start MQTT loop in a separate thread
@@ -85,4 +84,4 @@ with gr.Blocks() as app:
     line_plot = gr.LinePlot(query_influxdb_gr, label="InfluxDB", x="time", y="current", every=300)
 
 # Launch the app
-app.launch(share=True)
+app.launch()
