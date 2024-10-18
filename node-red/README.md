@@ -1,12 +1,4 @@
----
-title: Machine Monitoring
-emoji: 📈
-colorTo: gray
-sdk: gradio
-sdk_version: 4.44.1
-app_file: gradio/app.py
-pinned: true
----
+
 ## Node Red Integrations
 
 ## MQTT
