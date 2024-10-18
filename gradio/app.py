@@ -86,4 +86,4 @@ with gr.Blocks() as app:
     gr.Markdown("# Plotly Version")
 
 # Launch the app
-app.launch(share=True)
+app.launch()
