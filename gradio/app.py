@@ -85,7 +85,7 @@ with gr.Blocks() as app:
     gr.Markdown(f"Listening to MQTT topic: {MQTT_TOPIC}")
     line_plot = gr.LinePlot(update_mqtt_live_data, label="MQTT", x="datetime", y="current", every=1)
     gr.Markdown("# InfluxDB Data Visualization")
-    line_plot = gr.LinePlot(query_influxdb_gr, label="InfluxDB", x="time", y="current", every=300)
+    scatter_plot = gr.ScatterPlot(query_influxdb_gr, label="InfluxDB", x="time", y="current", every=300)
 
 # Launch the app
 app.launch()
