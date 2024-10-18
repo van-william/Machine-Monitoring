@@ -39,7 +39,7 @@ def main():
     query = '''
     SELECT *
     FROM "fan"
-    WHERE time >= now() - interval '1 week'
+    WHERE time >= now() - interval '2 week'
     '''
     df = query_influxdb(query)
     if not df.empty:

@@ -30,11 +30,6 @@ query = '''
 MQTT_BROKER = "broker.hivemq.com"
 MQTT_TOPIC = "test_fan/current"
 
-def query_influxdb(query):
-    table = influx_client.query(query=query, language="sql")
-    df = table.to_pandas().sort_values(by="time")
-    return df
-
 def query_influxdb_gr():
     query = '''
     SELECT *
@@ -77,37 +72,12 @@ def update_mqtt_live_data():
     df = pd.DataFrame(data_points)
     return df
 
-# Gradio components
-def update_chart():
-    fig = go.Figure()
-    fig.add_trace(go.Scatter(
-        x=[point["timestamp"] for point in data_points],
-        y=[point["current"] for point in data_points],
-        mode='lines+markers'
-    ))
-    fig.update_layout(
-        title="MQTT Data Visualization",
-        xaxis_title="Timestamp",
-        yaxis_title="Current (A)"
-    )
-    return fig
-
 with gr.Blocks() as app:
     gr.Markdown("# MQTT Data Visualization")
     gr.Markdown(f"Listening to MQTT topic: {MQTT_TOPIC}")
-
     line_plot = gr.LinePlot(update_mqtt_live_data, label="MQTT", x="datetime", y="current", every=1)
-
-
-
-    #plotly_plot = gr.Plot(make_figure(update_data), label="Plotly Chart", every=1)
-
     gr.Markdown("# InfluxDB Data Visualization")
     line_plot = gr.LinePlot(query_influxdb_gr, label="InfluxDB", x="time", y="current", every=300)
-
-    gr.Markdown("# Plotly Data Visualization")
-    plot = gr.Plot(update_chart, every=1)
-    app.load(update_chart, None, plot)
     
 
 # Launch the app
