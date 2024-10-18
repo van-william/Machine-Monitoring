@@ -8,6 +8,8 @@ from datetime import datetime
 import plotly.express as px
 import plotly.graph_objects as go
 import os
+import logging
+logger = logging.getLogger(__name__)
 
 # Global variables
 data_points = []
@@ -35,10 +37,11 @@ def query_influxdb_gr():
         df = table.to_pandas().sort_values(by="time")
         return df
     except:
+        logger.error('InfluxDB Integration Error')
         KeyError("Error with InfluxDB Integration")
 
 def on_connect(client, userdata, flags, reason_code, properties=None):
-    print(f"Connected with result code {reason_code}")
+    logger.info(f"Connected with result code {reason_code}")
     # Subscribing in on_connect() means that if we lose the connection and
     # reconnect then subscriptions will be renewed.
     client.subscribe(MQTT_TOPIC)
@@ -49,12 +52,13 @@ def on_message(client, userdata, message):
     try:
         payload = message.payload.decode()
         value = float(payload)  # Assume the payload is a single float value
+        logger.info(f'received value: {value}')
         data_points.append({"timestamp": time.time(), "current": value, "datetime": datetime.now().strftime('%H:%M:%S')})
         # Keep only the last MAX_DATA_POINTS        
         if len(data_points) > MAX_DATA_POINTS:
             data_points.pop(0)  # Remove the oldest data point
     except ValueError:
-        print(f"Received invalid payload: {payload}")
+        logger.error(f"Received invalid payload: {payload}")
 
 # Set up MQTT client
 client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2,protocol=mqtt.MQTTv5,transport='websockets')
