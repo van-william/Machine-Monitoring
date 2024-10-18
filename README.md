@@ -1,7 +1,7 @@
 ---
 title: Machine Monitoring
-emoji: 📈
-colorTo: gray
+emoji: 🏭
+colorTo: blue
 sdk: gradio
 sdk_version: 4.44.1
 app_file: gradio/app.py
