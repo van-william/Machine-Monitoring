@@ -85,4 +85,4 @@ with gr.Blocks() as app:
     line_plot = gr.LinePlot(query_influxdb_gr, label="InfluxDB", x="time", y="current", every=300)
 
 # Launch the app
-app.launch()
+app.launch(share=True)
