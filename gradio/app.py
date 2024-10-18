@@ -22,7 +22,7 @@ influx_client = InfluxDBClient3(host=INFLUXDB_URL, token=INFLUXDB_TOKEN, org=INF
 
 
 # MQTT setup
-MQTT_BROKER = "broker.hivemq.com"
+MQTT_BROKER = "mqtt://broker.hivemq.com:1883"
 MQTT_TOPIC = "test_fan/current"
 
 def query_influxdb_gr():
