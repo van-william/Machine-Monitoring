@@ -30,7 +30,7 @@ def query_influxdb_gr():
     query = '''
     SELECT *
     FROM "fan"
-    WHERE time >= now() - interval '3 weeks'
+    WHERE time >= now() - interval '1 week'
     '''
     try:
         table = influx_client.query(query=query, language="sql")
