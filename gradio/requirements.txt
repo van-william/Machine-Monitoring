@@ -58,7 +58,6 @@ modin==0.32.0
 mtrand==0.1
 multiprocess==0.70.17
 mypy==1.12.0
-numarray==1.5.1
 Numeric==24.2
 numexpr==2.8.4
 odfpy==1.4.1
