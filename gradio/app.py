@@ -20,11 +20,6 @@ INFLUXDB_ORG = "dd7895c825a7c36a"
 INFLUXDB_BUCKET = "machine_monitoring"
 influx_client = InfluxDBClient3(host=INFLUXDB_URL, token=INFLUXDB_TOKEN, org=INFLUXDB_ORG,database="machine_monitoring")
 
-query = '''
-    SELECT *
-    FROM "fan"
-    WHERE time >= now() - interval '2 week'
-    '''
 
 # MQTT setup
 MQTT_BROKER = "broker.hivemq.com"
@@ -34,11 +29,14 @@ def query_influxdb_gr():
     query = '''
     SELECT *
     FROM "fan"
-    WHERE time >= now() - interval '2 week'
+    WHERE time >= now() - interval '3 week'
     '''
-    table = influx_client.query(query=query, language="sql")
-    df = table.to_pandas().sort_values(by="time")
-    return df
+    try:
+        table = influx_client.query(query=query, language="sql")
+        df = table.to_pandas().sort_values(by="time")
+        return df
+    except:
+        KeyError("Error with InfluxDB Integration")
 
 
 
